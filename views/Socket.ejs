@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+<button class="submit">点击提交订单</button>
+</body>
+</html>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket=io.connect();
+    $('.submit').click(function(){
+        // $.get('/order-message',function(){
+        //
+        // })
+        socket.emit('setorder','一条新订单');
+    })
+    // socket.on('zdc',function(data){
+    //     console.log(data)
+    // })
+</script>

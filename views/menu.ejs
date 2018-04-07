@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="css/menu.css"/>
+	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script src="./vue.js" type="text/javascript" charset="utf-8"></script>
+
+	<script src="js1/MyTop.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js1/menu.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" type="text/css" href="css/myTop.css"/>
+	<link rel="stylesheet" type="text/css" href="css/myFoot.css"/>
+	<link rel="stylesheet" type="text/css" href="css/menuDetail.css"/>
+	<link rel="stylesheet" type="text/css" href="css/shopping-car.css"/>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+        //操作数据库查询等到的数据，动态创建、添加。
+        function changeMenu(id) {
+            var lists=$('.menu_list li a')
+            var itemId=[];
+            var changeId=id;
+            for(let i=0;i<lists.length;i++){
+                lists.eq(i).removeClass('list_active');
+                itemId.push(lists.eq(i).attr("data-itemId"));
+            }
+
+            for(let i=0;i<itemId.length;i++){
+                (function (i) {
+                    if(changeId==itemId[i]){
+                        $("#"+changeId).addClass('list_active');
+                    }
+                })(i)
+            }
+
+            //使用JQ的Ajax传递菜单的id到后台进行数据库查询操作
+            var url ="menuItem?id="+id;
+            $.ajax({
+                url:url,
+                method:'get',
+                success:function(result){
+                    var data=JSON.parse(result);
+                    $('.item').remove();
+                    for(var i=0;i<data.length;i++){
+                        // console.log(data[i]);
+                        var item_div=document.createElement('div');
+                        item_div.className='item';
+                        item_div.setAttribute('fid',data[i].fid);
+                        item_div.setAttribute('onclick','foodDetail('+data[i].fid+')');
+                        //盒子列表信息绑定监听事件，
+
+                        $('.right_contents').append(item_div);
+                        var image_div=document.createElement('div');
+                        image_div.className='imgBox';
+                        item_div.append(image_div);
+                        var image_img=document.createElement('img');
+                        image_img.className='img';
+                        image_img.src=data[i].images;
+                        image_div.append(image_img);
+                        var title_div=document.createElement('div');
+                        title_div.className='pizTitle';
+                        title_div.innerHTML=data[i].foodname;
+                        item_div.append(title_div);
+                        var order_div=document.createElement('div');
+                        order_div.className='order';
+                        item_div.append(order_div);
+                        var order_span=document.createElement('span');
+                        order_span.innerHTML='开始点餐';
+                        order_div.append(order_span);
+                    }
+                }});
+        }
+        //商品详情页面
+        function  foodDetail(id) {
+            // $(location).attr('href','./menuDetail?id='+id);
+            // $('.item').css('display','none');
+            $('.bigBg').css('display','block');
+            //$.ajax请求数据
+			console.log(id)
+            var url='queryfood?id='+id;
+            $.ajax({
+                url:url,
+                method:'get',
+                success:function (result) {
+                    var data=JSON.parse(result);
+
+                    $('.food-iamge').attr('src',data[0].images);
+                    $('.fooddetail').html(data[0].detail);
+                    $('.foodname').html(data[0].foodname);
+                    $('.pricetext').html(data[0].price);
+                    $('#foodsales').html(data[0].sales);
+                    $('.detailBox').attr('fid',data[0].fid);
+                    $('.bigBg').css('display','block');
+                    $('.detailBox').css('display','block');
+                }
+            })
+
+            $('.detailBox').css('display','block');
+        }
+        //点单详情页面的返回按钮
+        function  backToMenu() {
+            $('.detailBox').css('display','none');
+            $('.bigBg').css('display','none');
+            // $('.item').css('display','block');
+        }
+	</script>
+
+</head>
+<body >
+
+<!--商品盒子详情页面信息-->
+<!--遮罩层盒子-->
+<div class="bigBg"><%=session%></div>
+<!--商品详情页面，用于点餐，加入购物车-->
+<div class="boxShow">
+	<div class="detailBox">
+		<div class="backtomenu" onclick="backToMenu()"></div>
+		<div class="detail-good">
+			<div class="detail">
+				<div class="detail-left">
+					<div class="foodimg">
+						<img class="food-iamge" src="images/piz05.jpg"/>
+					</div>
+					<div class="fooddetail">
+						臻选蒲烧鳗鱼、日式牛肉菌菇、天妇罗大虾和照烧鸡肉，
+						一次尽享四重和风盛宴。主要原料:面团、芝士、烤鳗、照烧鸡肉、
+						天妇罗虾、牛肉、青红椒、玉米粒、白芝麻、海苔条、京葱、菌菇
+					</div>
+				</div>
+				<div class="detail-right">
+					<div class="foodname" id="foodname">
+						臻选和风四拼比萨
+					</div>
+					<div class="detail-price">
+						<span class="pricetext" id="foodprice">99.0</span>
+						<span class="unit">元</span>
+						<span class="food-sales">销量：<span class="food-sales" id="foodsales">99</span></span>
+					</div>
+					<div class="detail-add">
+						<div class="add-cart-num">
+							<div class="add-minus ico-jian" id="ico-jian">-</div>
+							<div class="add-num">
+								<input class="num" type="text" id="foodnum" value="1" />
+							</div>
+							<div class="add-minus ico-add" id="ico-add">+</div>
+						</div>
+						<div class="addtocar">
+							<span>+</span>
+							<span id="addToCar">加入购物盒</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--购物盒子，用户的点餐详情-->
+<div class="shopping-content">
+	<div class="shopping-title-area">
+		<div class="close-shopping-car">
+			<span class="lable-close">&nbsp;</span>
+		</div>
+		<div class="gouwuhe">我的购物盒</div>
+		<div class="clear-shopping-car">
+			<span>清空购物盒</span>
+		</div>
+	</div>
+	<div class="shopping-item">
+		<div class="item-box-top">
+			<div class="item-img">
+				<img src="images/piz01.jpg"/>
+			</div>
+			<div class="item-desc">
+				<div class="shopping-item-middle">
+					<span>聚乐盒(芝心)</span><br />
+					<span class="food-price">111.0元</span>
+				</div>
+			</div>
+			<div class="add-cart-num shopping-item-right">
+				<div class="add-minus ico-jian shopping-item-jian car-ico-jian" id="car-ico-jian">-</div>
+				<div class="add-num item-num">
+					<input class="num num-little" type="text" name="" id="carnum" value="1" />
+				</div>
+				<div class="add-minus ico-add shopping-item-add car-ico-add" id="car-ico-add">+</div>
+			</div>
+		</div>
+
+		<div class="item-bottom">
+
+		</div>
+	</div>
+
+</div>
+<!--固定在右下角的购物车-->
+<div class="shoppingBox">
+	<div class="shoppingBox-left" id="gouwuCar">
+		<div class="shopping-bg-car">0</div>
+		<div class="total-money">
+			<div class="shoppingBox-middle">
+						<span>
+							总计
+							<span class="shoppingBox-total-price">5.0</span>
+							元
+						</span>
+				<span>(含 <span class="psf">5</span>元外卖费)</span>
+			</div>
+		</div>
+	</div>
+	<div class="shoppingBox-right" id="placeAnOrder">
+		<span>选好了</span>
+		<span class="ui-next">&nbsp;</span>
+	</div>
+</div>
+<div id="app">
+	<!--引入头部template模板-->
+	<my-top >
+		<div slot="member" class="userName" v-if="<%=session%>">
+			<div class="userName-con">
+				<span class="userText"><%=session_tel%></span>
+				<b id="oB"></b>
+			</div>
+			<ul class="dropdown-ul">
+				<li><a href="#">个人资料</a></li>
+				<li class="divider"></li>
+				<li><a href="#">订单管理</a></li>
+				<li class="divider"></li>
+				<li><a href="out" class="">退出登录</a></li>
+			</ul>
+			<div class="userCard">
+				<a class="navbar-brand" href="#">我的卡券(7)</a>
+			</div>
+		</div>
+	</my-top>
+
+	<div class="menu_box">
+		<div class="contents">
+			<!--菜单列表信息-->
+			<div class="left_list">
+				<ul class="menu_list">
+					<!--<li><a href="" dta-cid="1" id="1" onmouseover="changeMenu(1)">当季特选</a></li>-->
+                    <%menuList.forEach(function (lists) {%>
+					<li><a id="<%=lists.cid%>" onclick="changeMenu(<%=lists.cid%>)" data-itemId="<%=lists.cid%>"><%=lists.catename%></a></li>
+                    <% })%>
+				</ul>
+			</div>
+			<!--商品盒子信息-->
+			<div class="right_contents">
+                <%menuData.forEach(function (dataItem) { %>
+				<div class="item" id="<%=dataItem.fid%>" onclick="foodDetail(<%=dataItem.fid%>)">
+					<div class="imgBox">
+						<img class="img" src="<%=dataItem.images%>"/>
+					</div>
+					<div class="pizTitle">
+                        <%=dataItem.foodname%>
+					</div>
+					<div class="order">
+						<span>开始点餐</span>
+					</div>
+				</div>
+                <% })%>
+
+			</div>
+		</div>
+	</div>
+	<!--引入底端template模板-->
+	<my-foot></my-foot>
+</div>
+
+<div id="getmap"></div>
+</body>
+</html>
+<script>
+
+</script>

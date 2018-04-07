@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Generator" content="">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="关键词">
+
+    <!--三个bootstrap带有的meta标签-->
+    <meta name="Description" content="描述">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+    <link rel="stylesheet" href="css/index.css">
+
+
+    <script src="./vue.js"></script>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="js1/index.js"></script>
+    <script src="http://apps.bdimg.com/libs/vue/1.0.8/vue.js"></script>
+
+
+
+    <script src="js1/MyTop.js"></script>
+    <link rel="stylesheet" href="css/myTop.css">
+    <link rel="stylesheet" href="css/myFoot.css">
+    <title>one is never too old to learn </title>
+    <style>
+        * {margin: 0;padding: 0;font-family: Microsoft YaHei, serif;}
+        body, dl, dd, h1, h2, h3, h4, h5, h6 {margin: 0;}
+        ol, ul, li {margin: 0;padding: 0;list-style: none;}
+        a{text-decoration: none;}
+        img{border: none;}
+
+
+    </style>
+</head>
+<body>
+
+
+<div id="app">
+    <my-top v-bind:vip="<%=session%>">
+        <div slot="member" class="userName" v-if="<%=session%>">
+            <div class="userName-con">
+                <span class="userText"><%=session%></span>
+                <b id="oB"></b>
+            </div>
+            <ul class="dropdown-ul">
+                <li><a href="#">个人资料</a></li>
+                <li class="divider"></li>
+                <li><a href="#">订单管理</a></li>
+                <li class="divider"></li>
+                <li><a href="out" class="">退出登录</a></li>
+            </ul>
+            <div class="userCard">
+                <a class="navbar-brand" href="#">我的卡券(7)</a>
+            </div>
+        </div>
+    </my-top>
+
+    <div class="Body" id="Body">
+        <!--轮播-->
+        <div class="banner">
+            <div class="pic">
+                <ul>
+                    <%=infor%>
+                    <% infor.index.forEach(function (ob) {%>
+                        <li> <img src=" <%= ob.images %>" alt="">
+                    <%}) %>
+                </ul>
+            </div>
+            <div class="btn">
+                <button class="left"> < </button>
+                <button class="right"> > </button>
+            </div>
+            <div class="tab">
+                <ul>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                </ul>
+            </div>
+        </div>
+        <!--特选-->
+        <div class="select">
+            <div class="top">
+                <ul>
+                    <li>
+                        <a href="">
+                            <img src="./images/texuan1.jpg" alt="">
+                            <span>免外送费</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="./images/texuan2.jpg" alt="">
+                            <span>聚乐盒</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="./images/texuan3.jpg" alt="">
+                            <span>比萨</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="./images/texuan4.jpg" alt="">
+                            <span>小吃</span>
+                        </a>
+                    </li>
+                    <li class="top-last-li">
+                        <a href="">
+                            <img src="./images/texuan5.png" alt="">
+                            <span>全部餐饮</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="bottom">
+                <span class="left">当季特选</span>
+                <span class="right">登录享更多优惠活动</span>
+            </div>
+        </div>
+        <!--加入我们-->
+        <div class="join">
+            <div class="top"> </div>
+            <div class="mid"><img src="./images/more.jpg" width="1200" height="100" alt=""></div>
+            <div class="bottom"><img src="./images/join.jpg" width="1200" height="260" alt=""></div>
+        </div>
+        <!--downLoad-->
+        <my-app></my-app>
+    </div>
+<my-foot></my-foot>
+</div>
+<script>
+
+    'use strick';
+
+    var vue = Vue({
+        el:"#app"
+    });
+
+</script>
+</body>
+</html>

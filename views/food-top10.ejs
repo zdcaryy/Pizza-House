@@ -1,0 +1,155 @@
+<%include common-head.ejs%>
+
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="page-header"><i class="fa fa fa-bars"></i> 食物信息</h3>
+                    <ol class="breadcrumb">
+                        <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
+                        <li><i class="fa fa-bars"></i>食物信息</li>
+                        <li><i class="fa fa-square-o"></i>食物榜单Top10</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- page start-->
+            <section class="panel">
+                <div id="c-slide" class="carousel slide auto panel-body">
+                    <ol class="carousel-indicators out">
+                        <li class="active" data-slide-to="0" data-target="#c-slide"></li>
+                        <li class="" data-slide-to="1" data-target="#c-slide"></li>
+                        <li class="" data-slide-to="2" data-target="#c-slide"></li>
+                        <li class="" data-slide-to="3" data-target="#c-slide"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="item text-center active">
+                            <header class="panel-heading">
+                                销量呱呱榜
+                            </header>
+
+                            <div class="row">
+                                <%data1.forEach(function(item1){%>
+                                <div class="col-md-3">
+
+                                    <div class="social-box facebook" style="padding:30px 0 40px 0">
+
+                                        <img class=col-md-12 src="<%=item1.images%>" alt="">
+                                        <h3><strong><%=item1.foodname%>(编号：<%=item1.fid%>)</strong></h3>
+                                        <ul>
+                                            <li>
+                                                <strong><%=item1.sales%></strong>
+                                                <span>销量</span>
+                                            </li>
+                                            <li>
+                                                <strong><%=item1.heartnum%></strong>
+                                                <span>好评</span>
+                                            </li>
+                                        </ul>
+                                    </div><!--/social-box-->
+                                </div>
+                                <%})%>
+                            </div>
+
+
+                        </div>
+                        <div class="item text-center">
+                            <header class="panel-heading">
+                               心仪榜
+                            </header>
+
+                            <div class="row">
+                                <%data2.forEach(function(item2){%>
+                                <div class="col-md-3">
+
+                                    <div class="social-box facebook" style="padding:30px 0 40px 0">
+
+                                        <img class=col-md-12 src="<%=item2.images%>" alt="">
+                                        <h3><strong><%=item2.foodname%>(编号：<%=item2.fid%>)</strong></h3>
+                                        <ul>
+                                            <li>
+                                                <strong><%=item2.sales%></strong>
+                                                <span>销量</span>
+                                            </li>
+                                            <li>
+                                                <strong><%=item2.heartnum%></strong>
+                                                <span>好评</span>
+                                            </li>
+                                        </ul>
+                                    </div><!--/social-box-->
+                                </div>
+                                <%})%>
+                            </div>
+                        </div>
+                        <div class="item text-center">
+                            <header class="panel-heading">
+                                没人疼爱榜
+                            </header>
+
+                            <div class="row">
+                                <%data2.forEach(function(item3){%>
+                                <div class="col-md-3">
+
+                                    <div class="social-box facebook" style="padding:30px 0 40px 0">
+
+                                        <img class=col-md-12 src="<%=item3.images%>" alt="">
+                                        <h3><strong><%=item3.foodname%>(编号：<%=item3.fid%>)</strong></h3>
+                                        <ul>
+                                            <li>
+                                                <strong><%=item3.sales%></strong>
+                                                <span>销量</span>
+                                            </li>
+
+                                            <li>
+                                                <strong><%=item3.badnum%></strong>
+                                                <span>差评</span>
+                                            </li>
+                                        </ul>
+                                    </div><!--/social-box-->
+                                </div>
+                                <%})%>
+                            </div>
+                        </div>
+                        <div class="item text-center">
+                            <header class="panel-heading">
+                                最令人讨厌
+                            </header>
+
+                            <div class="row">
+                                <%data2.forEach(function(item4){%>
+                                <div class="col-md-3">
+
+                                    <div class="social-box facebook" style="padding:30px 0 40px 0">
+                                        <img class=col-md-12 src="<%=item4.images%>" alt="">
+                                        <h3><strong><%=item4.foodname%>(编号：<%=item4.fid%>)</strong></h3>
+                                        <ul>
+                                            <li>
+                                                <strong><%=item4.sales%></strong>
+                                                <span>销量</span>
+                                            </li>
+                                            <li>
+                                                <strong><%=item4.badnum%></strong>
+                                                <span>差评</span>
+                                            </li>
+                                        </ul>
+                                    </div><!--/social-box-->
+                                </div>
+                                <%})%>
+                            </div>
+                        </div>
+                    </div>
+                    <a data-slide="prev" href="#c-slide" class="left carousel-control">
+                        <i class="arrow_carrot-left_alt2"></i>
+                    </a>
+                    <a data-slide="next" href="#c-slide" class="right carousel-control">
+                        <i class="arrow_carrot-right_alt2"></i>
+                    </a>
+                </div>
+            </section>
+
+            <!-- page end-->
+        </section>
+    </section>
+    <!--main content end-->
+
+<%include common-foot.ejs%>

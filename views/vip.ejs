@@ -1,0 +1,427 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Generator" content="">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="关键词">
+
+    <!--三个bootstrap带有的meta标签-->
+    <meta name="Description" content="描述">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!--对话样式开始-->
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap theme -->
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
+    <!--external css-->
+    <!-- font icon -->
+    <link href="css/elegant-icons-style.css" rel="stylesheet"/>
+    <link href="css/font-awesome.min.css" rel="stylesheet"/>
+    <!-- Custom styles -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet"/>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <script src="js/lte-ie7.js"></script>
+    <![endif]-->
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="js/vue.js"></script>
+
+<!--对话样式结束-->
+
+
+    <!--三级联动菜单的引用-->
+    <script type="text/javascript" src="js1/distpicker.data.js"></script>
+    <script type="text/javascript" src="js1/distpicker.js"></script>
+    <script type="text/javascript" src="js1/main.js"></script>
+    <!--三级联动引用结束-->
+
+    <link rel="stylesheet" href="css/vip.css">
+
+    <script src="js1/MyTop.js"></script>
+    <link rel="stylesheet" href="css/myTop.css">
+    <link rel="stylesheet" href="css/myFoot.css">
+    <script src="http://apps.bdimg.com/libs/vue/1.0.8/vue.js"></script>
+    <script src="js1/vip.js"></script>
+    <title>one is never too old to learn </title>
+    <style>
+        * {margin: 0;padding: 0;font-family: Microsoft YaHei, serif;}
+        body, dl, dd, h1, h2, h3, h4, h5, h6 {margin: 0;}
+        ol, ul, li {margin: 0;padding: 0;list-style: none;}
+        a{text-decoration: none;}
+        img{border: none;}
+
+
+    </style>
+
+
+
+    <script src="/socket.io/socket.io.js"></script>
+
+</head>
+<body>
+
+    <div id="session" style="display: none"><%=session%></div>
+    <div id="app">
+        <my-top v-bind:vip="<%=infor.user%>">
+            <div slot="member" class="userName" v-if="<%=session%>">
+                <div class="userName-con">
+                    <span class="userText"><%=infor.user%></span>
+                    <b id="oB"></b>
+                </div>
+                <ul class="dropdown-ul">
+                    <li><a href="#">个人资料</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">订单管理</a></li>
+                    <li class="divider"></li>
+                    <li><a href="out" class="">退出登录</a></li>
+                </ul>
+                <div class="userCard">
+                    <a class="navbar-brand" href="#">我的卡券(7)</a>
+                </div>
+            </div>
+
+            <div slot="motaikuang">
+
+            </div>
+        </my-top>
+
+         <div class="Body">
+            <div class="vipTop"></div>
+                <div class="vipMiddle"></div>
+                     <div class="vipContent-wrap container">
+
+                        <div class="vipContent">
+                            <div class="left">
+                                <ul>
+                                    <li><a href="javascript:;" >会员首页</a></li>
+                                    <li><a href="javascript:;">我的卡卷</a></li>
+                                    <li><a href="javascript:;">我的K金</a></li>
+                                    <li><a href="javascript:;">我的余额</a></li>
+                                    <li><a class="orderby"  href="javascript:;">我的订单</a></li>
+                                    <li><a class="dizhiguanli" href="javascript:;">地址管理</a></li>
+                                    <li><a class="gerenxinxi" href="javascript:;">个人信息</a></li>
+                                </ul>
+                            </div>
+                            <div class="right">
+                                <div class="right1 right2">
+                                    <div class="top" id="flag" data-flag="<%=flag%>">
+                                        <span><img src="images/vipHead.png" alt=""></span>
+                                        <div class="btn-wrap">
+                                            <%    if (infor.user){%>
+                                            <h3><%=infor.user%></h3>
+                                            <%  }else{ %>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1">注册</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">登录</button>
+                                            <%  } %>
+
+
+                                        </div>
+
+                                    </div>
+
+                                    <!--模态框开始-->
+                                    <!-- 模态框 -->
+                                    <div class="modal fade" id="myModal1">
+                                        <div class="modal-dialog"style="left:0px;">
+                                            <div class="modal-content">
+                                                <!-- 模态框头部 -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">成都三人行外卖平台</h4>
+                                                </div>
+                                                <!-- 模态框主体 -->
+                                                <div class="modal-body">
+                                                    <div class="login">
+                                                        <form action=""  class="form-group">
+                                                            <p>昵称：<input  class="form-control inp0"></p>
+                                                            <p>手机号：<input class="form-control inp1" name="name1" type="text"></p>
+                                                            <p>密码：<input class="form-control inp2" name="pwd1" type="password"></p>
+                                                            <p>重复密码：<input class="form-control inp3" name="pwd1" type="password"></p>
+                                                            <button type="button" id="reg" class="btn btn-primary">注册</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <!-- 模态框底部 -->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--模态框结束-->
+
+                                    <!--模态框开始-->
+                                    <!-- 模态框 -->
+                                    <div class="modal fade" id="myModal">
+                                        <div class="modal-dialog"style="left:0px;">
+                                            <div class="modal-content">
+                                                <!-- 模态框头部 -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">成都三人行外卖平台</h4>
+                                                    <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                                                </div>
+
+                                                <!-- 模态框主体 -->
+
+                                                <div class="modal-body">
+                                                    <div class="login">
+                                                        <form action=""  class="form-group">
+                                                            <p>账号：<input class="form-control name1" name="name1" type="text"></p>
+                                                            <p>密码：<input class="form-control pwd1" name="pwd1" type="password"></p>
+                                                            <button type="button" id="login" class="btn btn-primary">登录</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <!-- 模态框底部 -->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--模态框结束-->
+                                    <!--对话聊天模态框开始-->
+                                    <!-- 模态框 -->
+                                    <!--模态框开始-->
+                                    <%if(session){%>
+                                    <div class="modal fade" id="sellMan" >
+                                        <div class="modal-dialog"  style="left:0px;">
+                                            <div class="modal-content">
+                                                <!-- 模态框头部 -->
+                                                <div class="modal-header modal-Head">
+                                                    <h4 class="modal-title">成都三人行外卖平台</h4>
+                                                </div>
+
+                                                <!-- 模态框主体 -->
+
+                                                <div class="modal-body">
+                                                    <div class="col-md-12 portlets">
+                                                        <!-- Widget -->
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading">
+                                                                <div class="pull-left">Message</div>
+                                                                <div class="widget-icons pull-right">
+                                                                    <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
+                                                                    <a href="#" class="wclose"data-dismiss="modal"><i class="fa fa-times"></i></a>
+                                                                </div>
+                                                                <div class="clearfix"></div>
+                                                            </div>
+
+                                                            <div class="panel-body">
+                                                                <!-- Widget content -->
+                                                                <div class="padd sscroll" style="height:330px; overflow-y:auto;">
+
+                                                                    <ul class="chats">
+
+                                                                    </ul>
+
+                                                                </div>
+                                                                <!-- Widget footer -->
+                                                                <div class="widget-foot">
+
+                                                                    <form class="form-inline">
+                                                                        <div class="form-group">
+                                                                            <input type="text" class="form-control" placeholder="请尽情地吐槽吧" id="user-chat">
+                                                                        </div>
+                                                                        <button type="button" class="btn btn-info" id="chat">Send</button>
+                                                                    </form>
+
+
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- 模态框底部 -->
+                                                <div class="modal-footer">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <%}%>
+                                    <!--模态框结束-->
+                                    <!--对话聊天模态框结束-->
+                                    <div class="bottom">
+                                        <div class="left">
+                                            <img src="images/vipMidCon1.png" alt="">
+                                            <p>我的卡卷</p>
+                                            <p class="oP">---</p>
+                                        </div>
+                                        <div class="mid">
+                                            <img src="images/vipMidCon2.png" alt="">
+                                            <p>我的K金</p>
+                                            <p class="oP">---</p>
+                                        </div>
+                                        <div class="right1">
+                                            <img src="images/vipMidCon3.png" alt="">
+                                            <p>我的余额</p>
+                                            <p class="oP">---</p>
+                                        </div>
+                                    </div>
+                                    <!--down组件-->
+                                    <my-app></my-app>
+                                </div>
+
+                                <!--个人订单评论  -->
+
+                                <div class="kajuan right2">我是卡卷</div>
+                                <div class="kjin right2">我是评论</div>
+                                <div class="yue right2">我是余额</div>
+                                <div class="ordering right2">
+                                    <textarea name="" id="text" cols="30" rows="10"></textarea>
+                                    <button>提交</button>
+                                    <time></time>
+                                    <ul id="mycomment">
+
+                                    </ul>
+                                </div>
+                                <div class="dizhi right2">
+                                    <h3>地址管理</h3>
+                                    <p>
+                                        <label for="">收货地址：</label>
+                                        <span></span>
+                                    </p>
+
+                                    <div class="dizhi-content" data-toggle="distpicker">
+                                        <select id="eprovinceName" data-province="四川省" name="provinceName"></select>
+                                        <select id="ecityName" data-city="成都市" name="cityName"></select>
+                                        <select id="edistrictName" data-district="成华区" name="districtName"></select>
+                                    </div>
+                                    <button class="btn-dizhi">改变地址</button>
+                                </div>
+                                <div class="geren right2">
+
+                                    <h3>个人信息</h3>
+                                    <div class="content">
+                                        <div class="title">
+                                            <img src="images/geren.png" alt="" width="30" height="30"><span>账号/性别</span>
+
+                                            <div class="content-one">
+
+                                            </div>
+                                            <!--<div class="content-two">-->
+                                                <!--<input type="text" value="1234">-->
+                                                <!--<select id="">-->
+                                                    <!--<option value="0">女士</option>-->
+                                                    <!--<option value="1">先生</option>-->
+                                                <!--</select>-->
+                                            <!--</div>-->
+                                            <!--<button class="btn-xiugai">修改</button>-->
+                                        </div>
+                                        <div class="headerImg">
+                                            <h4>上传头像</h4>
+                                                <img src="" alt="" id="head-img">
+                                                <input type="file" id="files" name="thumbnail" >
+                                                <input type="submit" value="图片上传" id="img-submit">
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+             </div>
+        </div>
+        <my-foot></my-foot>
+    </div>
+<script>
+    var session=$('#session').html();
+    if(session){
+        $('.userName').css('display','inline-block');
+    }else {
+        console.log('session不存在！')
+    }
+</script>
+</body>
+</html>
+<!--对话逻辑开始-->
+<script>
+    var socket=io.connect();
+    socket.emit('getsocket',session)
+    $('#chat').click(function(){
+        if($('#user-chat').val()){
+            var val=$('#user-chat').val();
+            var tel=session;
+            var photo='img/user.jpg';
+            socket.emit('chatfromuser',{val:val,tel:tel,photo:photo});
+            //添加自己发送的消息
+            $('.chats').append(' <li class="by-other">\n' +
+                '                        <!-- Use the class "pull-right" in avatar -->\n' +
+                '                        <div class="avatar pull-right">\n' +
+                '                            <img src="'+photo+'" alt="">\n' +
+                '                        </div>\n' +
+                '\n' +
+                '                        <div class="chat-content">\n' +
+                '                            <!-- In the chat meta, first include "time" then "name" -->\n' +
+                '                            <div class="chat-meta">'+getNowFormatDate()+'<span class="pull-right">'+tel+'</span></div>\n' +
+                '                            '+val+'\n' +
+                '                            <div class="clearfix"></div>\n' +
+                '                        </div>\n' +
+                '                    </li>')
+            $('.sscroll').scrollTop($('.sscroll')[0].scrollHeight+330);
+            $('#user-chat').val('')
+        }
+    })
+    //接受商家的消息
+    socket.on('touser',function(data){
+        console.log(data);
+        $('.chats').append('<li class="by-me">\n' +
+            '                        <!-- Use the class "pull-left" in avatar -->\n' +
+            '                        <div class="avatar pull-left">\n' +
+            '                            <img src="'+data.photo+'" alt="">\n' +
+            '                        </div>\n' +
+            '\n' +
+            '                        <div class="chat-content">\n' +
+            '                            <!-- In meta area, first include "name" and then "time" -->\n' +
+            '                            <div class="chat-meta">'+data.adminname+'<span class="pull-right">'+data.time+'</span></div>\n' +
+            '                            '+data.val+'\n' +
+            '                            <div class="clearfix"></div>\n' +
+            '                        </div>\n' +
+            '                    </li>')
+        //让滚动条一直位于底部
+        // $('.sscroll').scrollTop( $('.sscroll').height()+330);
+        $('.sscroll').scrollTop($('.sscroll')[0].scrollHeight+330);
+    })
+
+    //获取当前时间的函数
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds();
+        return currentdate;
+    }
+</script>
+<!--对话逻辑结束-->

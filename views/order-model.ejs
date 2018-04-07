@@ -1,0 +1,28 @@
+<%dataArr.forEach(function(item){%>
+<div class="col-lg-12 orderlist" id="order<%=item.oid%>">
+    <section class="panel">
+        <div class="panel-body">
+            <div class="tab-content">
+                <div id="recent-activity" class="tab-pane active">
+                    <div class="profile-activity">
+                        <div class="act-time">
+                            <div class="activity-body act-in">
+                                <span class="arrow"></span>
+                                <div class="text">
+                                    <a href="#" class="activity-img"><img class="avatar" src="img/chat-avatar.jpg" alt=""></a>
+                                    <p class="attribution"><a href="#"><%=item.username%> <a><%=item.tel%></a></a> <%=item.addtime%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=item.address%></p>
+
+                                    <p><a>订单号：<%=item.oid%></a>订单内容：<%=item.content%></p>
+                                    <a class="btn btn-default order-accept" title="Bootstrap 3 themes generator"style="margin-top:15px" orderid="<%=item.oid%>">接单</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+<%})%>
+<script src="js/ours/order-accept.js"></script>

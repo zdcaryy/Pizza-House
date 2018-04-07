@@ -1,0 +1,63 @@
+<%include common-head.ejs%>
+
+<!--main content start-->
+<section id="main-content">
+    <section class="wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header"><i class="fa fa fa-bars"></i> 订单管理</h3>
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
+                    <li><i class="fa fa-bars"></i>订单管理</li>
+                    <li><i class="fa fa-square-o"></i>待处理订单</li>
+                </ol>
+            </div>
+        </div>
+<!--page start-->
+        <div id="order-body">
+            <%dataArr.forEach(function(item){%>
+            <div class="col-lg-12 orderlist" id="order<%=item.oid%>">
+                <section class="panel">
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div id="recent-activity" class="tab-pane active">
+                                <div class="profile-activity">
+                                    <div class="act-time">
+                                        <div class="activity-body act-in">
+                                            <span class="arrow"></span>
+                                            <div class="text">
+                                                <a href="#" class="activity-img"><img class="avatar" src="img/chat-avatar.jpg" alt=""></a>
+                                                <p class="attribution"><a href="#"><%=item.username%> <a><%=item.tel%></a></a> <%=item.addtime%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=item.address%></p>
+
+                                                <p><a href="#"><a>订单号：<%=item.oid%></a>订单内容:<%=item.content%></p>
+                                                <a class="btn btn-default order-accept" title="Bootstrap 3 themes generator"style="margin-top:15px" orderid="<%=item.oid%>">接单</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <%})%>
+        </div>
+        </section>
+        <!-- page end-->
+    </section>
+</section>
+<!--main content end-->
+
+<!--建立websocket连接-->
+<script>
+    socket.on('setorderlist',function(){
+        // $('.orderlist').eq(0).before('')
+        $.get('/order-list',function(data){
+            console.log(data)
+            $('#order-body').html(data);
+        })
+    })
+</script>
+<script src="js/ours/order-accept.js"></script>
+<%include common-foot.ejs%>

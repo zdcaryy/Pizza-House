@@ -1,0 +1,71 @@
+<%include common-head.ejs%>
+
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="page-header"><i class="fa fa fa-bars"></i> 用户管理</h3>
+                    <ol class="breadcrumb">
+                        <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
+                        <li><i class="fa fa-bars"></i>用户管理</li>
+                        <li><i class="fa fa-square-o"></i>会员管理</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- page start-->
+            <div id="add-user" class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            会员管理
+                        </header>
+                        <div class="panel-body">
+                            <div class="form">
+                                <form id="feedback_form" method="post" class="form-validate form-horizontal">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-2" for="inputSuccess">会员等级</label>
+                                        <div class="col-lg-10">
+                                            <select class="form-control m-bot15" name="gradename" id="grade-select">
+                                                <%gradeArr.forEach(function(grade){%>
+                                                <option value="<%=grade.mgid%>"><%=grade.mgname%></option>
+                                                <%})%>
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group ">
+                                        <label for="price" class="control-label col-lg-2">消费标准 <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control" id="price" name="price" minlength="5" type="text" required value="<%=gradeArr[0].mgprice%>" v-on:blur=" priceisNull"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group ">
+                                        <label for="discount" class="control-label col-lg-2">享受折扣 <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control" id="discount" name="discount" minlength="5" type="text" required value="<%=gradeArr[0].mgdiscount%>" v-on:blur="discountisNull"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-10">
+                                            <button class="btn btn-primary" type="button"  id="save-btn" v-on:click="submit">保存</button>
+                                            <button class="btn btn-default" type="button" v-on:click="refresh">刷新</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- page end-->
+        </section>
+    </section>
+    <!--main content end-->
+<%include common-foot.ejs%>
+<script src="js/ours/membergrade.js"></script>

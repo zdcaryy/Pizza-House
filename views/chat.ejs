@@ -1,0 +1,131 @@
+<%include common-head.ejs%>
+<!--main content start-->
+<section id="main-content">
+    <section class="wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header"><i class="fa fa fa-bars"></i> 用户社区</h3>
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
+                    <li><i class="fa fa-bars"></i>用户社区</li>
+                    <li><i class="fa fa-square-o"></i>私聊</li>
+                </ol>
+            </div>
+        </div>
+        <!--page开始-->
+
+        <!--page结束-->
+    </section>
+</section>
+<!--main content end-->
+<!--建立websocket连接-->
+
+<script>
+    socket.emit('getsocket','<%=session_username%>')
+    socket.on('toadmin',function(data){
+        console.log(data.userArr);
+        var userArr=data.userArr;
+        //判断用户是否是第一次发送消息，如果是，则创建一个新的对话窗口，专门存放与该用户的对话
+        if(userArr.indexOf(data.tel)==-1){
+            $('.row').after('<div class="col-md-4 portlets" id="'+data.tel+'">\n' +
+                '    <!-- Widget -->\n' +
+                '    <div class="panel panel-default">\n' +
+                '        <div class="panel-heading">\n' +
+                '            <div class="pull-left">Message</div>\n' +
+                '            <div class="widget-icons pull-right">\n' +
+                '                <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>\n' +
+                '                <a href="#" class="wclose"><i class="fa fa-times"></i></a>\n' +
+                '            </div>\n' +
+                '            <div class="clearfix"></div>\n' +
+                '        </div>\n' +
+                '\n' +
+                '        <div class="panel-body">\n' +
+                '            <!-- Widget content -->\n' +
+                '            <div class="padd sscroll" style="height:330px; overflow-y:auto;">\n' +
+                '\n' +
+                '                <ul class="chats" id="chat'+data.tel+'">\n' +
+                '\n' +
+                '                </ul>\n' +
+                '\n' +
+                '            </div>\n' +
+                '            <!-- Widget footer -->\n' +
+                '            <div class="widget-foot">\n' +
+                '\n' +
+                '                <form class="form-inline">\n' +
+                '                    <div class="form-group">\n' +
+                '                        <input type="text" class="form-control" placeholder="又有人来骚扰了">\n' +
+                '                    </div>\n' +
+                '                    <button type="button" class="btn btn-info admin_btn" tel="'+data.tel+'">Send</button>\n' +
+                '                </form>\n' +
+                '            </div>\n' +
+                '        </div>\n' +
+                '\n' +
+                '\n' +
+                '    </div>\n' +
+                '</div>')
+            //将新加入聊天的身份传回服务器，加入userArr数组
+            socket.emit('addtouserArr',data.tel);
+        }
+        $('#chat'+data.tel).append(' <li class="by-me">\n' +
+            '                        <!-- Use the class "pull-right" in avatar -->\n' +
+            '                        <div class="avatar pull-left">\n' +
+            '                           <img src="'+data.photo+'" alt="">\n' +
+            '                        </div>\n' +
+            '\n' +
+            '                        <div class="chat-content">\n' +
+            '                            <!-- In the chat meta, first include "time" then "name" -->\n' +
+            '                            <div class="chat-meta">'+data.time+'<span class="pull-right">'+data.tel+'</span></div>\n' +
+            '                            '+data.val+'\n' +
+            '                            <div class="clearfix"></div>\n' +
+            '                        </div>\n' +
+            '                    </li>')
+        //让滚动条一直位于底部
+        $('.sscroll').scrollTop($('.sscroll')[0].scrollHeight+330);
+    })
+
+    //管理员回复用户
+    //使用on动态绑定事件给新添加的元素
+    $('body').on('click','.admin_btn',function(){
+        var val=$(this).prev().children().eq(0).val();
+        var tel=$(this).attr('tel');
+        var adminname='<%=session_username%>';
+        var photo='img/user22.png';
+        if(val){
+            socket.emit('chatfromadmin',{val:val,tel:tel,photo:photo});
+            $('#chat'+tel).append(' <li class="by-other">\n' +
+                '                        <!-- Use the class "pull-right" in avatar -->\n' +
+                '                        <div class="avatar pull-right">\n' +
+                '                            <img src="'+photo+'" alt="">\n' +
+                '                        </div>\n' +
+                '\n' +
+                '                        <div class="chat-content">\n' +
+                '                            <!-- In the chat meta, first include "time" then "name" -->\n' +
+                '                            <div class="chat-meta">'+getNowFormatDate()+' <span class="pull-right">'+adminname+'</span></div>\n' +
+                '                            '+val+'\n' +
+                '                            <div class="clearfix"></div>\n' +
+                '                        </div>\n' +
+                '                    </li>')
+            $('.sscroll').scrollTop($('.sscroll')[0].scrollHeight+330);
+            $(this).prev().children().eq(0).val('');
+        }
+    })
+    //获取当前时间的函数
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds();
+        return currentdate;
+    }
+</script>
+<%include common-foot.ejs%>

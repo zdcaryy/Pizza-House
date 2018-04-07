@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
+    <meta name="author" content="GeeksLabs">
+    <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <title>Blank | Creative - Bootstrap 3 Responsive Admin Template</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap theme -->
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
+    <!--external css-->
+    <!-- font icon -->
+    <link href="css/elegant-icons-style.css" rel="stylesheet"/>
+    <link href="css/font-awesome.min.css" rel="stylesheet"/>
+    <!-- Custom styles -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet"/>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <script src="js/lte-ie7.js"></script>
+    <![endif]-->
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="js/vue.js"></script>
+
+    <!--本人在此引入socket-->
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+<div class="col-md-4 portlets">
+    <!-- Widget -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="pull-left">Message</div>
+            <div class="widget-icons pull-right">
+                <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
+                <a href="#" class="wclose"><i class="fa fa-times"></i></a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="panel-body">
+            <!-- Widget content -->
+            <div class="padd sscroll" style="height:330px; overflow-y:auto;">
+
+                <ul class="chats">
+
+                </ul>
+
+            </div>
+            <!-- Widget footer -->
+            <div class="widget-foot">
+
+                <form class="form-inline">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="请尽情地吐槽吧" id="user-chat">
+                    </div>
+                    <button type="button" class="btn btn-info" id="chat">Send</button>
+                </form>
+
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket=io.connect();
+    socket.emit('getsocket','18328810855')
+    $('#chat').click(function(){
+        if($('#user-chat').val()){
+            var val=$('#user-chat').val();
+            var tel='18328810855';
+            var photo='img/user.jpg';
+            socket.emit('chatfromuser',{val:val,tel:tel,photo:photo});
+            //添加自己发送的消息
+            $('.chats').append(' <li class="by-other">\n' +
+                '                        <!-- Use the class "pull-right" in avatar -->\n' +
+                '                        <div class="avatar pull-right">\n' +
+                '                            <img src="'+photo+'" alt="">\n' +
+                '                        </div>\n' +
+                '\n' +
+                '                        <div class="chat-content">\n' +
+                '                            <!-- In the chat meta, first include "time" then "name" -->\n' +
+                '                            <div class="chat-meta">'+getNowFormatDate()+'<span class="pull-right">'+tel+'</span></div>\n' +
+                '                            '+val+'\n' +
+                '                            <div class="clearfix"></div>\n' +
+                '                        </div>\n' +
+                '                    </li>')
+            $('.sscroll').scrollTop($('.sscroll')[0].scrollHeight+330);
+            $('#user-chat').val('')
+        }
+    })
+    //接受商家的消息
+    socket.on('touser',function(data){
+        console.log(data);
+        $('.chats').append('<li class="by-me">\n' +
+            '                        <!-- Use the class "pull-left" in avatar -->\n' +
+            '                        <div class="avatar pull-left">\n' +
+            '                            <img src="'+data.photo+'" alt="">\n' +
+            '                        </div>\n' +
+            '\n' +
+            '                        <div class="chat-content">\n' +
+            '                            <!-- In meta area, first include "name" and then "time" -->\n' +
+            '                            <div class="chat-meta">'+data.adminname+'<span class="pull-right">'+data.time+'</span></div>\n' +
+            '                            '+data.val+'\n' +
+            '                            <div class="clearfix"></div>\n' +
+            '                        </div>\n' +
+            '                    </li>')
+        //让滚动条一直位于底部
+        // $('.sscroll').scrollTop( $('.sscroll').height()+330);
+        $('.sscroll').scrollTop($('.sscroll')[0].scrollHeight+330);
+    })
+
+    //获取当前时间的函数
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds();
+        return currentdate;
+    }
+</script>
+

@@ -1,0 +1,94 @@
+<%include common-head.ejs%>
+
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="page-header"><i class="fa fa fa-bars"></i> 食物信息</h3>
+                    <ol class="breadcrumb">
+                        <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
+                        <li><i class="fa fa-bars"></i>食物信息</li>
+                        <li><i class="fa fa-square-o"></i>添加食物</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- page start-->
+            <div id="add-user" class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            会员管理
+                        </header>
+                        <div class="panel-body">
+                            <div class="form">
+                                <form id="feedback_form" method="post" class="form-validate form-horizontal">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-2" for="inputSuccess">食物类别</label>
+                                        <div class="col-lg-10">
+                                            <select class="form-control m-bot15" name="gradename" id="grade-select">
+                                                <%cateArr.forEach(function(cate){%>
+                                                <option value="<%=cate.cid%>"><%=cate.catename%></option>
+                                                <%})%>
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group ">
+                                        <label for="price" class="control-label col-lg-2">食物名称<span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control"  type="text" name="foodname" id="foodname" autofocus>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="price" class="control-label col-lg-2">食物售价<span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control"  type="text" name="price" id="foodprice" autofocus>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="price" class="control-label col-lg-2">食物优惠</label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control"  type="text" name="discount" id="discount" autofocus>
+                                        </div>
+                                    </div>
+                                    <!--富文本编辑器开始-->
+                                    <div class="form-group ">
+                                        <label for="price" class="control-label col-lg-2">食物详情</label>
+                                        <div class="col-lg-10">
+                                            <div class="controls">
+                                                <script id="content" name="content" type="text/plain" style="width:90%;height:200px">
+
+                                                </script></div>
+                                        </div>
+                                    </div>
+                                    <!--富文本编辑器结束-->
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-10">
+                                            <button class="btn btn-primary" type="button"  id="save-btn" >保存</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- page end-->
+        </section>
+    </section>
+    <!--main content end-->
+
+<script src="js/ours/food-add.js"></script>
+<!-- 编辑器使用的==配置文件 start-->
+<script type="text/javascript" src="ue/ueditor.config.js"></script>
+<script type="text/javascript" src="ue/ueditor.all.js"></script>
+<!-- 编辑器使用的==配置文件 end-->
+<script type="text/javascript">
+    var ue = UE.getEditor('content');
+</script>
+
+<%include common-foot.ejs%>
